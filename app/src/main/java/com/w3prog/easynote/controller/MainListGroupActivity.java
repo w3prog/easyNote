@@ -36,7 +36,7 @@ public class MainListGroupActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Intent intent = new Intent(this, EventListActivity.class);
-        //intent.putExtra(EventListActivity.EXTRA_Id,Eve)
+        intent.putExtra(EventListActivity.EXTRA_Id,Eve)
         startActivity(intent);
     }
 
