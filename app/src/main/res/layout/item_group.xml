@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#EFE"
+    android:paddingTop="7dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingBottom="7dp"
+    android:layout_height="wrap_content">
+        <TextView
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="20dp"
+            android:background="#F0A000"
+            android:textSize="16dp"
+            android:text="Очень важные дела"
+            android:id="@+id/textView_fg_it_gr_GROUP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+</LinearLayout>
