@@ -4,6 +4,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.w3prog.easynote.R;
+import com.w3prog.easynote.model.Event;
 import com.w3prog.easynote.model.EventCollection;
 import com.w3prog.easynote.model.GroupEvent;
 
@@ -43,7 +46,7 @@ public class MainListGroupActivity extends ListActivity {
 
 
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,15 +56,18 @@ public class MainListGroupActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.item_new_groupCrime:
+                Event event = new Event();
+                EventCollection.get(this).addEvent(event);
+                Intent i = new Intent(this, EditEventActivity.class);
+                i.putExtra(EditEventActivity.EXTRA_ID, event.getId());
+                startActivityForResult(i, 0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     private class GroupAdapter extends ArrayAdapter<GroupEvent> {
 

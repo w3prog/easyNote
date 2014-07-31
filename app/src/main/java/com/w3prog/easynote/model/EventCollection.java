@@ -124,7 +124,24 @@ public class EventCollection {
         Log.d(TAG, "Group event есть");
         for (int i = 0; i < 100 ; i++ ) {
             Log.d(TAG, "Элемент " + i);
-            Events.add(new Event(i, "Item " + i, groupEvent));
+            switch (i%5 +1){
+                case 1:
+                    Events.add(new Event(i, "Item " + i, groupEvent));
+                    break;
+                case 2:
+                    Events.add(new Event(i, "Item " + i, groupEvent1));
+                    break;
+                case 3:
+                    Events.add(new Event(i, "Item " + i, groupEvent2));
+                    break;
+                case 4:
+                    Events.add(new Event(i, "Item " + i, groupEvent3));
+                    break;
+                default:
+                    Events.add(new Event(i, "Item " + i, groupEvent4));
+                    break;
+            }
+
         }
         Log.d(TAG,"Группы создались");
     }

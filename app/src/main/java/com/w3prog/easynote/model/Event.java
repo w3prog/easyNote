@@ -23,6 +23,17 @@ public class Event {
     private final static int HOUR = 3;
     private final static int DAY = 4;
 
+    public static void setIdentificator(int identificator) {
+        Event.identificator = identificator;
+    }
+
+    private static int identificator = 0;
+
+
+    public Event() {
+        id=identificator++;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -31,10 +42,10 @@ public class Event {
         this.active = active;
     }
 
-    public Event(int id,
-                 String title,
+    public Event(String title,
                  GroupEvent groupEvent){
-        this.id =id;
+        identificator++;
+        id = identificator;
         this.title = title;
         this.groupEvent = groupEvent;
         description = "";
@@ -42,8 +53,9 @@ public class Event {
         date = new Date();
     }
 
+
     public Event(int id,
-                 String title, String description,
+            String title, String description,
                  GroupEvent groupEvent,
                  Date date,
                  int rem) {
@@ -55,9 +67,10 @@ public class Event {
         this.remem = rem;
     }
 
-    public Event(int id, String title, String description,
+    public Event(String title,
+                 String description,
                  GroupEvent groupEvent) {
-        this.id = id;
+        this.id = identificator++;
         this.title = title;
         this.description = description;
         this.groupEvent = groupEvent;

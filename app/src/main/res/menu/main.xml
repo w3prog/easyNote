@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity" >
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/item_new_groupCrime"
         android:title="@string/add"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="ifRoom|withText" />
 </menu>
