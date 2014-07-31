@@ -1,7 +1,13 @@
 package com.w3prog.easynote.controller;
 
-/**
- * Created by w3prog on 01.08.14.
- */
-public class EditEventActivity {
+import android.app.Activity;
+import android.os.Bundle;
+
+
+public class EditEventActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 }

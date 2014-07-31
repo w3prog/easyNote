@@ -30,6 +30,15 @@ public class EventCollection {
         //onStart();
     }
 
+    public ArrayList<Event> getSelectedEvents(int filter) {
+        ArrayList<Event> colEvents = new ArrayList<Event>();
+
+        for (Event item : Events)
+            if (item.getGroupEvent().getId() == filter)
+                colEvents.add(item);
+        return colEvents;
+    }
+
     public void addEvent(Event e){
         Events.add(e);
     }

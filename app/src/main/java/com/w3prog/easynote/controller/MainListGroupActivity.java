@@ -2,6 +2,7 @@ package com.w3prog.easynote.controller;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,13 @@ public class MainListGroupActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        Intent intent = new Intent(this, EventListActivity.class);
+        //intent.putExtra(EventListActivity.EXTRA_Id,Eve)
+        startActivity(intent);
     }
 
-    @Override
-    
+
+
     /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
