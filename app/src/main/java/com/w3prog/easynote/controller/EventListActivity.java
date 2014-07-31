@@ -2,6 +2,7 @@ package com.w3prog.easynote.controller;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,8 @@ public class EventListActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        collectionEvent = EventCollection.get(this).getEvents();
+        Intent intent = getIntent();
+        collectionEvent = EventCollection.get(this).getSelectedEvents(intent.getIntExtra(EXTRA_Id,1));
 
         EventAdapter groupAdapter = new EventAdapter(this);
         setListAdapter(groupAdapter);
