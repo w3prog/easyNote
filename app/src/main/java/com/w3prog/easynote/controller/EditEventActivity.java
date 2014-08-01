@@ -1,11 +1,14 @@
 package com.w3prog.easynote.controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -90,6 +93,7 @@ public class EditEventActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //TODO дописать выбор даты в программе
+                // Скорее всего придется добавлять дополнительный виджет для ввода времени.
             }
         });
 
@@ -97,7 +101,8 @@ public class EditEventActivity extends Activity {
         remenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO дописать выбор времени напоминания в программе
+                //TODO дописать диалог выбор времени напоминания в программе
+                //Реализую через диалог со списком
             }
         });
 

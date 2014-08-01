@@ -22,7 +22,7 @@ public class EventService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-        //
+        //TODO
         //  Загрузить данные из коллекции
         //      Запрос селект на базу данных
         //      Определение заявок активных заявок можно получить здесь же через это запрос банальным фильтром
