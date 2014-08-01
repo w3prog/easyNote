@@ -67,15 +67,14 @@ public class EventCollection {
         for(Event item :Events)
             if (item.getId() == id)
                 return item;
-        return null;//хотя желатьно выводить исключение, но это потом.
+        return null;//Todo сделать исключительную ситуацию здесь
     }
 
-    //нужно обязательно переменовать это метод
-    public GroupEvent getCrime(String name){
-        for (GroupEvent item : GroupEvents)
-            if (item.getTitle().equals(name))
+    public GroupEvent getGroupEvent(int id){
+        for(GroupEvent item :GroupEvents)
+            if (item.getId() == id)
                 return item;
-        return null;
+        return null;//Todo сделать исключительную ситуацию здесь
     }
 
     //Функция обновляющая базу данных
@@ -107,49 +106,62 @@ public class EventCollection {
     public void  geneCollection(){
         Log.d(TAG,"Начало генерации");
 
-        GroupEvent groupEvent = new GroupEvent(1, "Домашние дела");
+        GroupEvent groupEvent = new GroupEvent("Домашние дела");
         GroupEvents.add(groupEvent);
-        GroupEvent groupEvent1 = new GroupEvent(2, "Работа");
+        Log.d(TAG,"Первый прошел");
+
+        GroupEvent groupEvent1 = new GroupEvent("Работа");
         GroupEvents.add(groupEvent1);
-        GroupEvent groupEvent2 = new GroupEvent(3, "Друзья");
+
+
+        GroupEvent groupEvent2 = new GroupEvent("Друзья");
         GroupEvents.add(groupEvent2);
-        GroupEvent groupEvent3 = new GroupEvent(4, "Машина");
+
+        GroupEvent groupEvent3 = new GroupEvent("Машина");
         GroupEvents.add(groupEvent3);
-        GroupEvent groupEvent4 = new GroupEvent(5, "Секрет");
+
+        GroupEvent groupEvent4 = new GroupEvent("Секрет");
         GroupEvents.add(groupEvent4);
 
-        Event  event= new Event(1, "Item " + 1, groupEvent);
+        Log.d(TAG,"Группы созданы");
+        Event  event= new Event("Item " + 1, groupEvent);
         Log.d(TAG, groupEvent.toString());
 
         Log.d(TAG, "Group event есть");
         for (int i = 0; i < 100 ; i++ ) {
             Log.d(TAG, "Элемент " + i);
             switch (i%5 +1){
+
                 case 1:
-                    Events.add(new Event(i, "Item " + i, groupEvent));
+                    Events.add(new Event("Item " + i, groupEvent));
                     break;
+
                 case 2:
-                    Events.add(new Event(i, "Item " + i, groupEvent1));
+                    Events.add(new Event("Item " + i, groupEvent1));
                     break;
+
                 case 3:
-                    Events.add(new Event(i, "Item " + i, groupEvent2));
+                    Events.add(new Event("Item " + i, groupEvent2));
                     break;
+
                 case 4:
-                    Events.add(new Event(i, "Item " + i, groupEvent3));
+                    Events.add(new Event("Item " + i, groupEvent3));
                     break;
+
                 default:
-                    Events.add(new Event(i, "Item " + i, groupEvent4));
+                    Events.add(new Event("Item " + i, groupEvent4));
                     break;
             }
-
         }
         Log.d(TAG,"Группы создались");
+        Event.setIdentificator(Events.size());
+        GroupEvent.setIdt(GroupEvents.size());
     }
 
     public void geneCollectionInBD(){
 
         Log.d(TAG, "Начало ввесения строк в GROUPS");
-        GroupEvent groupEvent = new GroupEvent(1, "Группа событий");
+        GroupEvent groupEvent = new GroupEvent( "Группа событий");
 
         Log.d(TAG, groupEvent.toString());
         Log.d(TAG, "Сначала вставить одну группу");
@@ -161,7 +173,7 @@ public class EventCollection {
         Log.d(TAG,groupEvent.toString());
 
         Log.d(TAG, "Обновить её");
-        GroupEvent groupEvent1 = new GroupEvent(2, "Важная группа событий");
+        GroupEvent groupEvent1 = new GroupEvent( "Важная группа событий");
         eventDateBase.updateGroupEvent(groupEvent.getId(),groupEvent1);
 
         Log.d(TAG, "Вывести обновленое");
@@ -172,7 +184,7 @@ public class EventCollection {
         eventDateBase.deleteGroupEvent(groupEvent1.getId());
 
         Log.d(TAG, "Начало ввесения строк в EVENTS");
-        Event  event = new Event(1, "Item " + 1, groupEvent);
+        Event  event = new Event("Item " + 1, groupEvent);
 
         Log.d(TAG,event.getDate().toString());
 
@@ -186,7 +198,7 @@ public class EventCollection {
         Log.d(TAG,event.toString());
         Log.d(TAG, "Обновить её");
 
-        Event event1 = new Event(2, "Важная группа событий",groupEvent);
+        Event event1 = new Event("Важная группа событий",groupEvent);
         //eventDateBase.updateEvent(event.getId(), event1);
 
         Log.d(TAG, "Вывести обновленое");

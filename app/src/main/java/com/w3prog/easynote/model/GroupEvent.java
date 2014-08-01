@@ -1,29 +1,57 @@
 package com.w3prog.easynote.model;
 
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * Created by w3prog on 27.07.14.
  */
 public class GroupEvent {
 
+    private static final String TAG ="GroupEvent";
+
     private int id;
     private String Title;
     private int color;
     private String Description;
 
-    public GroupEvent(int id, String title){
-        this.id = id;
-        this.Title = title;
+    private static int idt = 0;
+
+    public static void setIdt(int idt) {
+        GroupEvent.idt = idt;
+    }
+
+    public GroupEvent() {
+
+        this.id = idt++;
+        Title = "";
+        color =Color.parseColor("#CCCCCC");
+        Description = "";
+    }
+
+    public GroupEvent(String mytitle){
+
+        Log.d(TAG,"В конструтор попало");
+        Log.d(TAG,Integer.toString(idt));
+
+        this.id = idt++;
+        Log.d(TAG,Integer.toString(idt));
+        Log.d(TAG,mytitle);
+
+        Title = mytitle;
         this.Description = "";
-        this.color = Color.parseColor("#666666");
+        this.color = Color.parseColor("#AAAAAA");
+        Log.d(TAG,"Вышло");
+
     }
 
     public GroupEvent(int id, String title, String description, int color) {
+
         this.id = id;
         Title = title;
         Description = description;
         this.color = color;
+
     }
 
     public String getTitle() {

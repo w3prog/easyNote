@@ -50,13 +50,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/But_fg_ev_group"
-        android:id="@+id/button_fg_ev_group"
-        android:layout_marginLeft="6dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/Button_fg_ev_remember"
         android:id="@+id/button_fg_ev_remember"
         android:layout_marginLeft="6dp" />

@@ -4,6 +4,9 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,12 +15,14 @@ import android.widget.TextView;
 import com.w3prog.easynote.R;
 import com.w3prog.easynote.model.Event;
 import com.w3prog.easynote.model.EventCollection;
+import com.w3prog.easynote.model.GroupEvent;
 
 import java.util.ArrayList;
 
 
 public class EventListActivity extends ListActivity {
 
+    private static final String TAG = "EventListActivity";
     public static final String EXTRA_Id = "EventListActivity_ID";
 
     private ArrayList<Event> collectionEvent;
@@ -31,6 +36,34 @@ public class EventListActivity extends ListActivity {
         EventAdapter groupAdapter = new EventAdapter(this);
         setListAdapter(groupAdapter);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_new_groupCrime:
+                Event event = new Event();
+                Intent intent = getIntent();
+                int idGroup = intent.getIntExtra(EXTRA_Id,1);
+
+                Log.d(TAG, "В приложение уже вошли!");
+                EventCollection.get(this).addEvent(event);
+                Intent i = new Intent(this, EditEventActivity.class);
+                i.putExtra(EditEventActivity.EXTRA_ID, event.getId());
+                i.putExtra(EditEventActivity.EXTRA_GROUP_ID, idGroup);
+                Log.d(TAG,"В приложение уже вошли!");
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
