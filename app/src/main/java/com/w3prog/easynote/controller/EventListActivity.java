@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.w3prog.easynote.R;
@@ -58,6 +59,7 @@ public class EventListActivity extends ListActivity {
                 Intent i = new Intent(this, EditEventActivity.class);
                 i.putExtra(EditEventActivity.EXTRA_ID, event.getId());
                 i.putExtra(EditEventActivity.EXTRA_GROUP_ID, idGroup);
+                i.putExtra(EditEventActivity.EXTRA_TYPE,true);
                 Log.d(TAG,"В приложение уже вошли!");
                 startActivity(i);
                 return true;
@@ -65,6 +67,24 @@ public class EventListActivity extends ListActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent intent = new Intent(this, EventListActivity.class);
+        int ID_event = collectionEvent.get(position).getId();
+
+        intent.putExtra(EventListActivity.EXTRA_Id,ID_event);
+
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((EventAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
 
 
     private class EventAdapter extends ArrayAdapter<Event> {
