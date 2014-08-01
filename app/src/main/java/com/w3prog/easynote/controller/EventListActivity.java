@@ -71,10 +71,10 @@ public class EventListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(this, EventListActivity.class);
+        Intent intent = new Intent(this, EditEventActivity.class);
         int ID_event = collectionEvent.get(position).getId();
 
-        intent.putExtra(EventListActivity.EXTRA_Id,ID_event);
+        intent.putExtra(EditEventActivity.EXTRA_ID,ID_event);
 
         startActivity(intent);
     }
