@@ -103,6 +103,15 @@ public class EventCollection {
         Events = eventDateBase.getEventCollection();
     }
 
+    public ArrayList<Event> getActiveEvents(){
+        ArrayList<Event> colEvents = new ArrayList<Event>();
+
+        for (Event item : Events)
+            if (item.isActive())
+                colEvents.add(item);
+        return colEvents;
+    }
+
     public void  geneCollection(){
         Log.d(TAG,"Начало генерации");
 
@@ -128,7 +137,7 @@ public class EventCollection {
         Log.d(TAG, groupEvent.toString());
 
         Log.d(TAG, "Group event есть");
-        for (int i = 0; i < 100 ; i++ ) {
+        for (int i = 1; i < 100 ; i++ ) {
             Log.d(TAG, "Элемент " + i);
             switch (i%5 +1){
 
@@ -236,6 +245,7 @@ public class EventCollection {
         public EventDateBase(Context context) {
             super(context, NAME_DATA_BASE, null, VERSION_DATA_BASE);
         }
+
 
         //Данные метод создает начальную базу данных если нужно
         @Override

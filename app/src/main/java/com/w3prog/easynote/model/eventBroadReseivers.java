@@ -10,7 +10,9 @@ import android.content.Intent;
 public class eventBroadReseivers extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        //TODO здесь добавлю код для автозапуска сервиса
-        context.startService(new Intent(context, EventService.class));
+        if("android.intent.action.BOOT_COMPLETED"
+                .equals(intent.getAction()))
+            context.startService(
+                    new Intent(context, EventService.class));
     }
 }

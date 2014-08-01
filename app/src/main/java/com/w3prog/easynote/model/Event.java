@@ -124,7 +124,7 @@ public class Event {
         this.id = id;
     }
 
-    private  Date showTimeRemem(Date date,int a){
+    public static Date showTimeRemem(Date date,int a){
 
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -132,16 +132,16 @@ public class Event {
             case 0:
                 return calendar.getTime();
             case 1:
-                calendar.add(Calendar.MINUTE, 15);
+                calendar.add(Calendar.MINUTE, -15);
                 return calendar.getTime();
             case 2:
-                calendar.add(Calendar.MINUTE,30);
+                calendar.add(Calendar.MINUTE,-30);
                 return calendar.getTime();
             case 3:
-                calendar.add(Calendar.HOUR,1);
+                calendar.add(Calendar.HOUR,-1);
                 return calendar.getTime();
             case 4:
-                calendar.add(Calendar.DAY_OF_YEAR,1);
+                calendar.add(Calendar.DAY_OF_YEAR,-1);
                 return calendar.getTime();
             default:
                 return null;

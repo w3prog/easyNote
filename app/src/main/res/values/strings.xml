@@ -11,15 +11,6 @@
     <string name="day">Один день</string>
     <string name="default_name_event">Дело</string>
 
-    <string-array name="remember_collection">
-        <item>Никогда</item>
-        <item>15 минут</item>
-        <item>Полчаса</item>
-        <item>Один час</item>
-        <item>День</item>
-    </string-array>
-
-
     <string name="Title_fg_it_ev">Название события</string>
     <string name="Data_fg_it_ev">Выбрать дату</string>
     <string name="But_fg_ev_group">Указать группу</string>

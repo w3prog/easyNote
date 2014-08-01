@@ -32,8 +32,8 @@ public class EventListActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        collectionEvent = EventCollection.get(this).getSelectedEvents(intent.getIntExtra(EXTRA_Id,1));
-
+        collectionEvent = EventCollection.get(this)
+                .getSelectedEvents(intent.getIntExtra(EXTRA_Id,1));
         EventAdapter groupAdapter = new EventAdapter(this);
         setListAdapter(groupAdapter);
 
@@ -102,15 +102,18 @@ public class EventListActivity extends ListActivity {
             }
             Event event = getItem(position);
 
-            TextView TitleTextView = (TextView) convertView.findViewById(R.id.textView_fg_it_ev_TITLE);
+            TextView TitleTextView = (TextView) convertView
+                    .findViewById(R.id.textView_fg_it_ev_TITLE);
             TitleTextView.setText(event.getTitle());
             TitleTextView.setBackgroundColor(event.getGroupEvent().getColor());
 
 
-            TextView GroupTextView = (TextView) convertView.findViewById(R.id.textView_fg_it_ev_GROUP);
+            TextView GroupTextView = (TextView) convertView
+                    .findViewById(R.id.textView_fg_it_ev_GROUP);
             GroupTextView.setText(event.getGroupEvent().getTitle());
 
-            TextView DateTextView = (TextView) convertView.findViewById(R.id.textView_fg_it_ev_DATE);
+            TextView DateTextView = (TextView) convertView
+                    .findViewById(R.id.textView_fg_it_ev_DATE);
             DateTextView.setText(event.getDate().toString());
 
             return convertView;
