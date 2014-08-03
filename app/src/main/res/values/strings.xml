@@ -11,11 +11,22 @@
     <string name="day">Один день</string>
     <string name="default_name_event">Дело</string>
 
+    <string name="date_picker_title">Дата события</string>
     <string name="Title_fg_it_ev">Название события</string>
     <string name="Data_fg_it_ev">Выбрать дату</string>
     <string name="But_fg_ev_group">Указать группу</string>
     <string name="Button_fg_ev_remember">Установить напоминание</string>
     <string name="TextF_fg_gr_name">Название группы</string>
     <string name="choise_color">Выбрать цвет</string>
+
+
+    <!-- Colors -->
+    <string name="Color_Blue">Blue</string>
+    <string name="Color_Gold">Gold</string>
+    <string name="Color_Green">Green</string>
+    <string name="Color_Honeydew">Honeydew</string>
+    <string name="Color_Orange">Orange</string>
+    <string name="Color_Red">Red</string>
+    <string name="Color_Yellow">Yellow</string>
 
 </resources>

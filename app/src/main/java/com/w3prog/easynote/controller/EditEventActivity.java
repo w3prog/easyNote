@@ -3,10 +3,12 @@ package com.w3prog.easynote.controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,9 +21,13 @@ import com.w3prog.easynote.model.Event;
 import com.w3prog.easynote.model.EventCollection;
 import com.w3prog.easynote.model.GroupEvent;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class EditEventActivity extends Activity {
 
+    public static final String DIALOG_DATE = "date";
     public static final String EXTRA_ID = "EditEventActivity_ID";
     public static final String EXTRA_GROUP_ID = "EditEventActivity_GROUP_ID";
     public static final String EXTRA_TYPE = "EditEventActivity_TYPE";
@@ -29,8 +35,10 @@ public class EditEventActivity extends Activity {
     CheckBox activeCheckBox;
     EditText titleEditText;
     EditText deskriptionEditText;
-    Button dateButton;
+    Button buttonDate;
+    Button buttonTime;
     Button remenButton;
+    Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,8 @@ public class EditEventActivity extends Activity {
 
         Intent intent = getIntent();
 
-        final Event event = EventCollection
+
+        event = EventCollection
                 .get(getApplication())
                 .getEvent(intent.getIntExtra(EXTRA_ID,1));
 
@@ -49,6 +58,22 @@ public class EditEventActivity extends Activity {
                 .getGroupEvent(intent.getIntExtra(EXTRA_GROUP_ID, 1));
         event.setGroupEvent(groupEvent);
         }
+
+        buttonDate = (Button)findViewById(R.id.button_date);
+        buttonDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onstartDialogDate();
+            }
+        });
+
+        buttonTime = (Button)findViewById(R.id.button_time);
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onstartDialogTime();
+            }
+        });
 
         titleEditText = (EditText)findViewById(R.id.editText_ev_title);
         titleEditText.setText(event.getTitle());
@@ -88,15 +113,6 @@ public class EditEventActivity extends Activity {
             }
         });
 
-        dateButton = (Button)findViewById(R.id.button_ev_date);
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO дописать выбор даты в программе
-                // Скорее всего придется добавлять дополнительный виджет для ввода времени.
-            }
-        });
-
         remenButton = (Button)findViewById(R.id.button_ev_remember);
         remenButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,5 +132,83 @@ public class EditEventActivity extends Activity {
         });
 
 
+    }
+
+    private void onstartDialogTime() {
+        FragmentManager fm = getFragmentManager();
+        TimePickerFragment dialog = new TimePickerFragment();
+        dialog.setActivity(this);
+        dialog.setDate(event.getDate());
+        dialog.show(fm, DIALOG_DATE);
+    }
+
+    private void onstartDialogDate() {
+        FragmentManager fm = getFragmentManager();
+        DatePickerFragment dialog = new DatePickerFragment();
+        dialog.setActivity(this);
+        dialog.setDate(event.getDate());
+        dialog.show(fm, DIALOG_DATE);
+    }
+
+    public void setTimeOfDialog(Date mDate) {
+        writeTime(mDate);
+        event.setDate(mDate);
+    }
+
+    public void setDateOfDialog(Date mDate) {
+        writeDate(mDate);
+        event.setDate(mDate);
+    }
+
+
+    private void writeDate(Date date){
+        Calendar calendar =Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(calendar.YEAR);
+        String month = toMinth(calendar.get(calendar.MONTH));
+        int days = calendar.get(calendar.DAY_OF_MONTH);
+
+        String Sdate ="" +days + " " + month + " " + year;
+        buttonDate.setText(Sdate);
+    }
+
+    private void writeTime(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int Hour = calendar.get(calendar.HOUR_OF_DAY);
+        int minute = calendar.get(calendar.MINUTE);
+        buttonTime.setText("" + Hour + " : " + minute);
+    }
+
+    private String toMinth(int s) {
+
+        switch (s){
+            case 0:
+                return "Января";
+            case 1:
+                return "Февраля";
+            case 2:
+                return "Марта";
+            case 3:
+                return "Апреля";
+            case 4:
+                return "Мая";
+            case 5:
+                return "Июня";
+            case 6:
+                return "Июля";
+            case 7:
+                return "Августа";
+            case 8:
+                return "Сентября";
+            case 9:
+                return "Октября";
+            case 10:
+                return "Ноября";
+            case 11:
+                return "Декабря";
+            default:
+                return null;
+        }
     }
 }

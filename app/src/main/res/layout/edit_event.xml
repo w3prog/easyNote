@@ -40,12 +40,27 @@
         android:layout_weight="0.31"
         android:layout_margin="10dp" />
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Data_fg_it_ev"
-        android:id="@+id/button_ev_date"
-        android:layout_marginLeft="6dp" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/button_date"
+            android:text="Дата события" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:id="@+id/button_time"
+            android:text="Время события"
+            />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"

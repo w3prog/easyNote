@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.w3prog.easynote.R;
 import com.w3prog.easynote.model.EventCollection;
 import com.w3prog.easynote.model.GroupEvent;
+import com.w3prog.easynote.model.MyColor;
 
 public class GroupEditActivity extends Activity {
 
@@ -93,5 +94,7 @@ public class GroupEditActivity extends Activity {
     }
 
 
+    public void setColorOfDialog(MyColor mColor) {
 
+    }
 }
