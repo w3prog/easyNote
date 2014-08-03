@@ -80,17 +80,8 @@ public class GroupEditActivity extends Activity {
 
             }
         });
-        Log.d(TAG,"onCreate");
 
 
-        colorButton = (Button)findViewById(R.id.button_select_color);
-        colorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Log.d(TAG,"onCreate");
     }
 
 

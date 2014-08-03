@@ -37,11 +37,36 @@
         android:layout_weight="0.44"
         android:layout_margin="10dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choise_color"
-        android:id="@+id/button_select_color" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Выбор цвета"
+        android:id="@+id/textView2" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:id="@+id/LLselect_Color">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/my_image"
+            android:src="@drawable/gold_box"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Gold"
+            android:id="@+id/select_color_name"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
