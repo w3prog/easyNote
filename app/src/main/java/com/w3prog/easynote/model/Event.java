@@ -64,6 +64,19 @@ public class Event {
         this.date = date;
         this.remem = rem;
     }
+    public Event(int id,
+                 String title, String description,
+                 GroupEvent groupEvent,
+                 Date date,
+                 int rem,boolean active) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.groupEvent = groupEvent;
+        this.date = date;
+        this.remem = rem;
+        this.active = active;
+    }
 
     public Event(String title,
                  String description,

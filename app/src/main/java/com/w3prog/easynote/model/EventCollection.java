@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.util.Log;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,7 +33,6 @@ public class EventCollection {
         Log.d(TAG,"Грузится коллекция");
         eventDateBase= new EventDateBase(context);
         geneCollection();
-        geneCollectionInBD();
     }
 
     public ArrayList<Event> getSelectedEvents(int filter) {
@@ -106,30 +108,24 @@ public class EventCollection {
     }
 
     public void  geneCollection(){
+        eventDateBase.deleteAllData();
         Log.d(TAG,"Начало генерации");
-
         GroupEvent groupEvent = new GroupEvent("Домашние дела",
                 Color.parseColor("#0066bb"));
         GroupEvents.add(groupEvent);
         Log.d(TAG,"Первый прошел");
-
         GroupEvent groupEvent1 = new GroupEvent("Работа",
                 Color.parseColor("#dd0000"));
         GroupEvents.add(groupEvent1);
-
-
         GroupEvent groupEvent2 = new GroupEvent("Друзья",
                 Color.parseColor("#FFD700"));
         GroupEvents.add(groupEvent2);
-
         GroupEvent groupEvent3 = new GroupEvent("Машина",
                 Color.parseColor("#bbaa00"));
         GroupEvents.add(groupEvent3);
-
         GroupEvent groupEvent4 = new GroupEvent("Секрет",
                 Color.parseColor("#000000"));
         GroupEvents.add(groupEvent4);
-
         Log.d(TAG,"Группы созданы");
         Event  event= new Event("Item " + 1, groupEvent);
         Log.d(TAG, groupEvent.toString());
@@ -156,6 +152,18 @@ public class EventCollection {
             }
         }
         Log.d(TAG,"Группы создались");
+        eventDateBase.insertGroupEventCollection(GroupEvents);
+        eventDateBase.insertEventCollection(Events);
+        Log.d(TAG,"Данные скинулись в базу данных");
+
+        Events.clear();
+        GroupEvents.clear();
+
+        GroupEvents.addAll(eventDateBase.getGroupCollection());
+        Events.addAll(eventDateBase.getEventCollection());
+
+
+        //Todo нужно перевести не от размера а от максимального ID
         Event.setIdentificator(Events.size());
         GroupEvent.setIdt(GroupEvents.size());
     }
@@ -221,7 +229,7 @@ public class EventCollection {
                     + EVENTS_ID + " integer primary key,"
                     + EVENTS_TITLE + " text,"
                     + EVENTS_DESCRIPTION + " text,"
-                    + EVENTS_DATE + " integer,"
+                    + EVENTS_DATE + " text,"
                     + EVENTS_GROUPNAME+" integer,"
                     + EVENTS_REMEM+"  integer," +
                       EVENTS_ACTIVE +" integer" + ");");
@@ -242,6 +250,14 @@ public class EventCollection {
             //надеюсь не понадобится
         }
 
+        // очищает полностью базу данных
+        protected void deleteAllData(){
+            Log.d(TAG,"Выполнение операций очистка базы данных");
+            getWritableDatabase().delete("Groups", "", null);
+            getWritableDatabase().delete("Events", "", null);
+
+        }
+
         // Данный метод совершает запрос к базе данных на получение одного события по его ID
         public Event getEvent (int id){
             Log.d(TAG,"Начало создания Курсора getEvent");
@@ -251,31 +267,32 @@ public class EventCollection {
             Event event;
             Log.d(TAG,"Работа с курсором");
 
-
             if (c.moveToFirst()){
+
+                Date newDate = null;
+                try {
+                    newDate = new SimpleDateFormat()
+                            .parse(c.getString(c.getColumnIndex(EVENTS_DATE)));
+                } catch (ParseException e) {
+                    Log.d(TAG,"Ошибка Парсинга данных");
+                    e.printStackTrace();
+                }
+                if( newDate == null ) newDate =new Date();
+
                 event = new Event(
                         c.getInt(c.getColumnIndex(EVENTS_ID)),
                         c.getString(c.getColumnIndex(EVENTS_TITLE)),
                         c.getString(c.getColumnIndex(EVENTS_DESCRIPTION)),
                         eventDateBase.getGroupEvent(c.getInt(c.getColumnIndex(EVENTS_GROUPNAME))),
-                        new Date(c.getInt(c.getColumnIndex(EVENTS_DATE))),
+                        newDate,
                         c.getInt(c.getColumnIndex(EVENTS_REMEM)));
 
-                Log.d(TAG,event.getDate().toString());
                 Log.d(TAG,"Работа с курсором завершена");
                 return event;
             } else {
                 Log.d(TAG,"Курсор пустой");
                 return null;
             }
-        }
-
-        // очищает полностью базу данных
-        protected void deleteAllData(){
-            Log.d(TAG,"Выполнение операций очистка базы данных");
-            getWritableDatabase().delete("Groups", GROUP_ID + " = *", null);
-            getWritableDatabase().delete("Events", "id = *", null);
-
         }
 
         //Данный метод возращает группу по ID
@@ -306,28 +323,53 @@ public class EventCollection {
         //Данный метод созращает коллекцию событий для приложений
         public ArrayList<Event> getEventCollection(){
             ArrayList<Event>  arrayList = new ArrayList<Event>();
-
-            Cursor c = getWritableDatabase().rawQuery("Select id," +
-                    "title," +
-                    "description," +
-                    "date," +
-                    "groupName," +
-                    "reminder from Events"+
+            Cursor c = getWritableDatabase().rawQuery("Select "+EVENTS_ID+", " +
+                    EVENTS_TITLE+", " +
+                    EVENTS_DESCRIPTION+", " +
+                    EVENTS_DATE+", " +
+                    EVENTS_GROUPNAME+", " +
+                    EVENTS_REMEM+", " +
+                    EVENTS_ACTIVE+" from Events "+
                     "order by id",null);
+            if (c.moveToFirst()){
+                do {
+                    Date newDate = null;
+                    try {
+                        newDate = new SimpleDateFormat()
+                                .parse(c.getString(c.getColumnIndex(EVENTS_DATE)));
+                    } catch (ParseException e) {
+                        Log.d(TAG,"Ошибка Парсинга данных");
+                        e.printStackTrace();
+                    }
+                    if( newDate == null ) newDate =new Date();
+                    arrayList.add( new Event(
+                            c.getInt(c.getColumnIndex(EVENTS_ID)),
+                            c.getString(c.getColumnIndex(EVENTS_TITLE)),
+                            c.getString(c.getColumnIndex(EVENTS_DESCRIPTION)),
+                            eventDateBase.getGroupEvent(
+                                    c.getInt(c.getColumnIndex(EVENTS_GROUPNAME))),
+                            newDate,
+                            c.getInt(c.getColumnIndex(EVENTS_REMEM))
 
-
-            //Todo сделать возможным правильные ввод данный
-
+                    ));
+                    c.moveToNext();
+                } while (c.isAfterLast() == false);
+                Log.d(TAG,"Работа с курсором завершена getEventCollection");
+            } else {
+                Log.d(TAG,"Курсор c группами событий пустой");
+            }
 
 
             return arrayList;
+
         }
 
-        //Данный метод возразает коллекцию событий из базы данных
+        //Данный метод возращает коллекцию событий из базы данных
         public ArrayList<GroupEvent> getGroupCollection(){
             ArrayList<GroupEvent>  arrayList = new ArrayList<GroupEvent>();
-            Cursor c = getWritableDatabase().rawQuery("Select name," +
-                    "description," +
+            Cursor c = getWritableDatabase().rawQuery("Select id, " +
+                    "nameGroup, " +
+                    "description, " +
                     "color from Groups order by id",null);
 
             if (c.moveToFirst()){
@@ -352,58 +394,44 @@ public class EventCollection {
 
         //данный метод добавляет событие в базу данных
         public void insertEvent(Event e){
-            Log.d(TAG,"Подготовка значений Eve INT");
-
-
             ContentValues cv = new ContentValues();
             cv.put(EVENTS_ID, e.getId());
             cv.put(EVENTS_TITLE, e.getTitle() );
             cv.put(EVENTS_DESCRIPTION, e.getDescription());
-            cv.put(EVENTS_DATE, e.getDate().getDate());
+            cv.put(EVENTS_DATE, e.getDate().toString());
             cv.put(EVENTS_GROUPNAME, e.getGroupEvent().getId());
             cv.put(EVENTS_REMEM, e.getRemem());
             cv.put(EVENTS_ACTIVE, e.isActive());
-            Log.d(TAG, "Подготовка значений выполнение запроса EVE INT");
             long rowID = getWritableDatabase().insert("Events", null, cv);
-        }
-
-        //Данный метод обновляет событие в базе данных по id
-        public void updateEvent(int id, Event e){
-            Log.d(TAG,"Подготовка значений Eve UPD");
-            ContentValues cv = new ContentValues();
-
-            cv.put(EVENTS_ID, e.getId());
-            cv.put(EVENTS_TITLE, e.getTitle() );
-            cv.put(EVENTS_DESCRIPTION, e.getDescription());
-            cv.put(EVENTS_DATE, e.getDate().getTime());
-            cv.put(EVENTS_GROUPNAME, e.getGroupEvent().getId());
-            cv.put(EVENTS_REMEM, e.getRemem());
-            cv.put(EVENTS_ACTIVE, e.isActive());
-
-            Log.d(TAG, "Выполнение запроса EVE UPD");
-            getWritableDatabase().update("Events", cv, EVENTS_ID + " = ?",
-                    new String[]{Integer.toString(id)});
-            Log.d(TAG,"Завершение запроса Eve UPD");
-        }
-
-        //Данный метод удаляет событие по id
-        public void deleteEvent(int id){
-            int delCount = getWritableDatabase().delete("Events", "id = " + id, null );
         }
 
         //Данный метод добавляет событие в базу данных
         public void insertGroudEvent(GroupEvent e){
-            Log.d(TAG,"Подготовка значений");
+
             ContentValues cv = new ContentValues();
 
             cv.put(GROUP_ID, e.getId());
             cv.put(GROUP_NAME, e.getTitle());
             cv.put(GROUP_DESCRIPTION, e.getDescription());
             cv.put(GROUP_COLOR, e.getColor());
-            Log.d(TAG,"Выполнение операций INS");
+
             long rowID = getWritableDatabase().insert("Groups", null, cv);
 
         }
+
+        public void insertEventCollection(ArrayList<Event> events){
+            for(Event item:events){
+                insertEvent(item);
+            }
+        }
+
+        public void insertGroupEventCollection(ArrayList<GroupEvent> groupEvents){
+            for(GroupEvent item:groupEvents){
+                insertGroudEvent(item);
+            }
+        }
+
+        //раньше считал что эти методы необходимы, но потом решил что они не нужны
 
         //Обновление Группы событий
         public void updateGroupEvent(int id, GroupEvent e ){
@@ -423,6 +451,30 @@ public class EventCollection {
         public void deleteGroupEvent( int id){
             Log.d(TAG,"Выполнение операций DEL для строки с id равным " + id);
             getWritableDatabase().delete("Groups", GROUP_ID + " = " + id, null);
+        }
+
+        //Данный метод обновляет событие в базе данных по id
+        public void updateEvent(int id, Event e){
+            Log.d(TAG,"Подготовка значений Eve UPD");
+            ContentValues cv = new ContentValues();
+
+            cv.put(EVENTS_ID, e.getId());
+            cv.put(EVENTS_TITLE, e.getTitle() );
+            cv.put(EVENTS_DESCRIPTION, e.getDescription());
+            cv.put(EVENTS_DATE, e.getDate().toString());
+            cv.put(EVENTS_GROUPNAME, e.getGroupEvent().getId());
+            cv.put(EVENTS_REMEM, e.getRemem());
+            cv.put(EVENTS_ACTIVE, e.isActive());
+
+            Log.d(TAG, "Выполнение запроса EVE UPD");
+            getWritableDatabase().update("Events", cv, EVENTS_ID + " = ?",
+                    new String[]{Integer.toString(id)});
+            Log.d(TAG,"Завершение запроса Eve UPD");
+        }
+
+        //Данный метод удаляет событие по id
+        public void deleteEvent(int id){
+            int delCount = getWritableDatabase().delete("Events", "id = " + id, null );
         }
     }
 
