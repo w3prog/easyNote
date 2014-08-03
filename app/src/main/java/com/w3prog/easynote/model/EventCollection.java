@@ -33,6 +33,7 @@ public class EventCollection {
         Log.d(TAG,"Грузится коллекция");
         eventDateBase= new EventDateBase(context);
         geneCollection();
+        loadDataBase();
     }
 
     public ArrayList<Event> getSelectedEvents(int filter) {
@@ -42,6 +43,21 @@ public class EventCollection {
             if (item.getGroupEvent().getId() == filter)
                 colEvents.add(item);
         return colEvents;
+    }
+
+    public void updateBateBase(){
+        //Todo сделать в будующем возможную обработку ошибок
+
+        Log.d(TAG,"Начало обновления базы данных");
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                eventDateBase.deleteAllData();
+                eventDateBase.insertGroupEventCollection(GroupEvents);
+                eventDateBase.insertEventCollection(Events);
+                Log.d(TAG,"Обновление базы данных завершено");
+            }
+        })).start();
     }
 
     public void addEvent(Event e){
@@ -80,6 +96,16 @@ public class EventCollection {
             if (item.getId() == id)
                 return item;
         return null;//Todo сделать исключительную ситуацию здесь
+    }
+
+
+
+    private void loadDataBase(){
+        //Todo надо бы проверить на наличие ошибок при работе
+        GroupEvents.addAll(eventDateBase.getGroupCollection());
+        Events.addAll(eventDateBase.getEventCollection());
+        Event.setIdentificator(maxIdEvents(Events));
+        GroupEvent.setIdt(maxIdGroupEvent(GroupEvents));
     }
 
     public static EventCollection get(Context c){
@@ -159,43 +185,27 @@ public class EventCollection {
         Events.clear();
         GroupEvents.clear();
 
-        GroupEvents.addAll(eventDateBase.getGroupCollection());
-        Events.addAll(eventDateBase.getEventCollection());
-
-
-        //Todo нужно перевести не от размера а от максимального ID
-        Event.setIdentificator(Events.size());
-        GroupEvent.setIdt(GroupEvents.size());
     }
 
-    public void geneCollectionInBD(){
-
-        Log.d(TAG, "Начало ввесения строк в GROUPS");
-        GroupEvent groupEvent = new GroupEvent( "Группа событий");
-
-
-        Log.d(TAG, "Начало ввесения строк в EVENTS");
-        Event  event = new Event(10000,"Item " + 1, "Не значительное событие",groupEvent,
-                new Date(),2);
-        Log.d(TAG, event.toStringFull());
-
-        eventDateBase.insertGroudEvent(groupEvent);
-        eventDateBase.insertEvent(event);
-        Log.d(TAG, "Вывести её содержимое");
-        Event newEvent = eventDateBase.getEvent(event.getId());
-
-        Log.d(TAG, Integer.toString(newEvent.getId()));
-        Log.d(TAG, newEvent.getTitle());
-        Log.d(TAG, newEvent.getDescription());
-        Log.d(TAG, newEvent.getGroupEvent().getTitle());
-        Log.d(TAG, newEvent.getDate().toString());
-        Log.d(TAG, Integer.toString(newEvent.getRemem()));
-        Log.d(TAG, Boolean.toString(newEvent.isActive()));
-
-
-        Log.d(TAG, newEvent.toStringFull());
+    //Получает максимальный ID
+    //TODO выполнить тотже запрос через SQL
+    public int maxIdEvents(ArrayList<Event> events){
+        int MAX = 1;
+        for (Event item:events){
+            if(item.getId()>MAX) MAX=item.getId();
+        }
+        return MAX;
     }
 
+    //Получает максимальный ID
+    //TODO выполнить тотже запрос через SQL
+    public int maxIdGroupEvent(ArrayList<GroupEvent> groupEvents){
+        int MAX = 1;
+        for (GroupEvent item:groupEvents){
+            if(item.getId()>MAX) MAX=item.getId();
+        }
+        return MAX;
+    }
 
     public class EventDateBase extends SQLiteOpenHelper {
 
