@@ -1,16 +1,12 @@
 package com.w3prog.easynote.controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -136,7 +132,7 @@ public class EditEventActivity extends Activity {
 
     private void onstartDialogTime() {
         FragmentManager fm = getFragmentManager();
-        TimePickerFragment dialog = new TimePickerFragment();
+        TimePickerDialog dialog = new TimePickerDialog();
         dialog.setActivity(this);
         dialog.setDate(event.getDate());
         dialog.show(fm, DIALOG_DATE);
@@ -144,7 +140,7 @@ public class EditEventActivity extends Activity {
 
     private void onstartDialogDate() {
         FragmentManager fm = getFragmentManager();
-        DatePickerFragment dialog = new DatePickerFragment();
+        DatePickerDialog dialog = new DatePickerDialog();
         dialog.setActivity(this);
         dialog.setDate(event.getDate());
         dialog.show(fm, DIALOG_DATE);

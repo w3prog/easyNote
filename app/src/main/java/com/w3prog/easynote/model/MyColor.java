@@ -2,9 +2,6 @@ package com.w3prog.easynote.model;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by w3prog on 03.08.14.
- */
 public class MyColor {
 
     public MyColor(int color, Drawable drawable ) {

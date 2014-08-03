@@ -3,9 +3,6 @@ package com.w3prog.easynote.model;
 import android.graphics.Color;
 import android.util.Log;
 
-/**
- * Created by w3prog on 27.07.14.
- */
 public class GroupEvent {
 
     private static final String TAG ="GroupEvent";

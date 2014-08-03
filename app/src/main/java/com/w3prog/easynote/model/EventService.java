@@ -10,9 +10,7 @@ import android.os.IBinder;
 import java.util.Date;
 import java.util.ArrayList;
 
-/**
- * Created by w3prog on 31.07.14.
- */
+
 public class EventService extends Service {
 
     ArrayList<Event> events;

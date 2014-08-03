@@ -4,9 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by w3prog on 27.07.14.
- */
+
 public class Event {
 
     private int id;

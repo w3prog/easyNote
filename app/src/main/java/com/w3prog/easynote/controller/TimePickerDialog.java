@@ -16,10 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by w3prog on 24.07.14.
- */
-public class TimePickerFragment extends DialogFragment {
+public class TimePickerDialog extends DialogFragment {
 
     private static final String TAG = "TimePickerFragment";
 

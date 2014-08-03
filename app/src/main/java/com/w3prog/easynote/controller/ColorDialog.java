@@ -22,12 +22,7 @@ import com.w3prog.easynote.model.MyColor;
 
 import java.util.ArrayList;
 
-/**
- * Created by w3prog on 02.08.14.
- */
-public class DialogColor extends DialogFragment{
-
-
+public class ColorDialog extends DialogFragment{
 
     GroupEditActivity groupEditActivity;
     MyColor mColor;
