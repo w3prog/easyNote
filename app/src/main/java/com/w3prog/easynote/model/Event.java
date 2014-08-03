@@ -150,4 +150,14 @@ public class Event {
     public String toString() {
         return title + " " + date.toString();
     }
+
+    public String toStringFull(){
+        return "id Event "+ id +
+                "\n Title Event = " + title  +
+                "\n Description" + description +
+                "\n Date event " + date +
+                "\n groupEvent " +groupEvent.getTitle() +
+                "\n Active event " + active +
+                "\n Remem event " +remem;
+    }
 }
