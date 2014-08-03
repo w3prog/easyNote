@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Выбор цвета"
+        android:text="Цвет группы"
         android:id="@+id/textView2" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,14 +55,13 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/my_image"
-            android:src="@drawable/gold_box"
             android:layout_margin="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Gold"
+            android:text="Выберите новый цвет"
             android:id="@+id/select_color_name"
             android:layout_marginTop="10dp" />
 

@@ -94,7 +94,7 @@ public class MainListGroupActivity extends ListActivity {
             TextView GroupTextView = (TextView)convertView
                     .findViewById(R.id.textView_fg_it_gr_GROUP);
             GroupTextView.setText(group.getTitle());
-
+            GroupTextView.setBackgroundColor(group.getColor());
             return convertView;
         }
     }

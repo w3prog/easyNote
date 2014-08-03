@@ -22,7 +22,7 @@ public class GroupEvent {
 
         this.id = idt++;
         Title = "";
-        color =Color.parseColor("#CCCCCC");
+        color =Color.parseColor("#FFD700");
         Description = "";
     }
 
