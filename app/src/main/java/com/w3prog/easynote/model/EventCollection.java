@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -115,21 +116,26 @@ public class EventCollection {
     public void  geneCollection(){
         Log.d(TAG,"Начало генерации");
 
-        GroupEvent groupEvent = new GroupEvent("Домашние дела");
+        GroupEvent groupEvent = new GroupEvent("Домашние дела",
+                Color.parseColor("#0066bb"));
         GroupEvents.add(groupEvent);
         Log.d(TAG,"Первый прошел");
 
-        GroupEvent groupEvent1 = new GroupEvent("Работа");
+        GroupEvent groupEvent1 = new GroupEvent("Работа",
+                Color.parseColor("#dd0000"));
         GroupEvents.add(groupEvent1);
 
 
-        GroupEvent groupEvent2 = new GroupEvent("Друзья");
+        GroupEvent groupEvent2 = new GroupEvent("Друзья",
+                Color.parseColor("#FFD700"));
         GroupEvents.add(groupEvent2);
 
-        GroupEvent groupEvent3 = new GroupEvent("Машина");
+        GroupEvent groupEvent3 = new GroupEvent("Машина",
+                Color.parseColor("#bbaa00"));
         GroupEvents.add(groupEvent3);
 
-        GroupEvent groupEvent4 = new GroupEvent("Секрет");
+        GroupEvent groupEvent4 = new GroupEvent("Секрет",
+                Color.parseColor("#000000"));
         GroupEvents.add(groupEvent4);
 
         Log.d(TAG,"Группы созданы");
@@ -140,23 +146,18 @@ public class EventCollection {
         for (int i = 1; i < 100 ; i++ ) {
             Log.d(TAG, "Элемент " + i);
             switch (i%5 +1){
-
                 case 1:
                     Events.add(new Event("Item " + i, groupEvent));
                     break;
-
                 case 2:
                     Events.add(new Event("Item " + i, groupEvent1));
                     break;
-
                 case 3:
                     Events.add(new Event("Item " + i, groupEvent2));
                     break;
-
                 case 4:
                     Events.add(new Event("Item " + i, groupEvent3));
                     break;
-
                 default:
                     Events.add(new Event("Item " + i, groupEvent4));
                     break;

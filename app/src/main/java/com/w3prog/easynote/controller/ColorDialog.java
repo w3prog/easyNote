@@ -66,14 +66,15 @@ public class ColorDialog extends DialogFragment{
                 //TODO метод должен возращать числовое значение цвета из диалога.
                 mColor=colorAdapter.getItem(position);
                 sendResult(Activity.RESULT_OK);
-                
+                dismiss();
+
             }
         });
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle("Выберите цвет")
                 .setPositiveButton(
-                        android.R.string.ok,
+                        "Назад",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

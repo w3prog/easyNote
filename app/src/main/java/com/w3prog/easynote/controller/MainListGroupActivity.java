@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class MainListGroupActivity extends ListActivity {
         startActivity(intent);
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -54,7 +57,6 @@ public class MainListGroupActivity extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }

@@ -107,7 +107,7 @@ public class GroupEditActivity extends Activity {
 
         imageView = (ImageView)findViewById(R.id.my_image);
         ShapeDrawable shapeDrawable = new ShapeDrawable();
-        shapeDrawable.getPaint().setColor(Color.parseColor("#000000"));
+        shapeDrawable.getPaint().setColor(groupEvent.getColor());
         shapeDrawable.setIntrinsicWidth(40);
         shapeDrawable.setIntrinsicHeight(40);
         imageView.setBackgroundDrawable(shapeDrawable);
@@ -130,5 +130,6 @@ public class GroupEditActivity extends Activity {
         shapeDrawable.setIntrinsicWidth(40);
         shapeDrawable.setIntrinsicHeight(40);
         imageView.setBackgroundDrawable(shapeDrawable);
+        colorNameTextView.setText(mColor.getNameColor());
     }
 }

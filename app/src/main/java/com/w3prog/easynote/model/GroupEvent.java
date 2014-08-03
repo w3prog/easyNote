@@ -18,6 +18,13 @@ public class GroupEvent {
         GroupEvent.idt = idt;
     }
 
+
+    public GroupEvent(String title, int color) {
+        this.id = idt++;
+        Title = title;
+        this.color = color;
+    }
+
     public GroupEvent() {
 
         this.id = idt++;
@@ -37,7 +44,7 @@ public class GroupEvent {
 
         Title = mytitle;
         this.Description = "";
-        this.color = Color.parseColor("#AAAAAA");
+        this.color = Color.parseColor("#FFD700");
         Log.d(TAG,"Вышло");
 
     }
