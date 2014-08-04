@@ -10,6 +10,6 @@ public class eventBroadReseivers extends BroadcastReceiver {
         if("android.intent.action.BOOT_COMPLETED"
                 .equals(intent.getAction()))
             context.startService(
-                    new Intent(context, EventService.class));
+                    new Intent(context, ManagerEventsService.class));
     }
 }

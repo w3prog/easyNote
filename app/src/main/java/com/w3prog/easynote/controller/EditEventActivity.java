@@ -16,6 +16,7 @@ import com.w3prog.easynote.R;
 import com.w3prog.easynote.model.Event;
 import com.w3prog.easynote.model.EventCollection;
 import com.w3prog.easynote.model.GroupEvent;
+import com.w3prog.easynote.model.MyColor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class EditEventActivity extends Activity {
         event = EventCollection
                 .get(getApplication())
                 .getEvent(intent.getIntExtra(EXTRA_ID,1));
-
+        if (event.getDate() == null ) event.setDate(new Date());
         if(intent.getBooleanExtra(EXTRA_TYPE,false)){
         GroupEvent groupEvent = EventCollection
                 .get(getApplication())
@@ -113,8 +114,7 @@ public class EditEventActivity extends Activity {
         remenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO дописать диалог выбор времени напоминания в программе
-                //Реализую через диалог со списком
+               startDialogRemem();
             }
         });
 
@@ -128,6 +128,13 @@ public class EditEventActivity extends Activity {
         });
 
 
+    }
+
+    void startDialogRemem() {
+        FragmentManager fm = getFragmentManager();
+        DialogSelectRememb dialog = new DialogSelectRememb();
+        dialog.setEditEventActivity(this);
+        dialog.show(fm, DIALOG_DATE);
     }
 
     private void onstartDialogTime() {
@@ -206,5 +213,11 @@ public class EditEventActivity extends Activity {
             default:
                 return null;
         }
+    }
+
+
+    public void setRemembOfDialog(int remember_id, String nameRememb) {
+        remenButton.setText(nameRememb);
+        event.setRemem(remember_id);
     }
 }

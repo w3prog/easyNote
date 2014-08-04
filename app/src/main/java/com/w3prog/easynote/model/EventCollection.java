@@ -32,7 +32,9 @@ public class EventCollection {
         GroupEvents = new ArrayList<GroupEvent>();
         Log.d(TAG,"Грузится коллекция");
         eventDateBase= new EventDateBase(context);
-        geneCollection();
+        //Скоро уберу
+        //geneCollection();
+        eventDateBase.deleteAllData();
         loadDataBase();
     }
 
@@ -45,6 +47,9 @@ public class EventCollection {
         return colEvents;
     }
 
+    //Данная функция очищает базу данных и вставляет туда данные из хранилища объектов
+    //TODO можно будет реализовать эту функцию по другому или хотябы положить все действия
+    //в транзакцию.
     public void updateBateBase(){
         //Todo сделать в будующем возможную обработку ошибок
 
@@ -114,16 +119,6 @@ public class EventCollection {
             eventCollection = new EventCollection(c.getApplicationContext());
         return eventCollection;
     }
-
-    private void onStart(){
-        loadInBD();
-    }
-
-    private void loadInBD() {
-        GroupEvents = eventDateBase.getGroupCollection();
-        Events = eventDateBase.getEventCollection();
-    }
-
     public ArrayList<Event> getActiveEvents(){
         ArrayList<Event> colEvents = new ArrayList<Event>();
 
@@ -133,6 +128,7 @@ public class EventCollection {
         return colEvents;
     }
 
+    // В нормальной версии программы будет убрана.
     public void  geneCollection(){
         eventDateBase.deleteAllData();
         Log.d(TAG,"Начало генерации");

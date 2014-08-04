@@ -15,7 +15,7 @@ public class Event {
     private boolean active = true;
     private int remem = 0;
 
-    private final static  int NEVER = 0 ;
+    private final static int NEVER = 0 ;
     private final static int FIFTEEN = 1;
     private final static int HALFHOUR = 2;
     private final static int HOUR = 3;

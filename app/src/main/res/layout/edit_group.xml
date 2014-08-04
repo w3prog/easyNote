@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText_description_gr"
-        android:layout_weight="0.44"
         android:layout_margin="10dp" />
 
     <TextView

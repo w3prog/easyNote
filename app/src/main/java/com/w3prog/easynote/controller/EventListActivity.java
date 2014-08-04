@@ -3,6 +3,7 @@ package com.w3prog.easynote.controller;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,17 +28,18 @@ public class EventListActivity extends ListActivity {
 
     private static final String TAG = "EventListActivity";
     public static final String EXTRA_Id = "EventListActivity_ID";
-
+    private int ID_group = 1 ;
     private ArrayList<Event> collectionEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        ID_group = intent.getIntExtra(EXTRA_Id,1);
         collectionEvent = EventCollection.get(this)
-                .getSelectedEvents(intent.getIntExtra(EXTRA_Id,1));
-        EventAdapter groupAdapter = new EventAdapter(this);
-        setListAdapter(groupAdapter);
+                .getSelectedEvents(ID_group);
+        EventAdapter eventAdapter = new EventAdapter(this);
+        setListAdapter(eventAdapter);
 
     }
 
@@ -84,6 +86,12 @@ public class EventListActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //обновление данных на листе
+        collectionEvent = EventCollection.get(this)
+                .getSelectedEvents(ID_group);
+        EventAdapter eventAdapter = new EventAdapter(this);
+        setListAdapter(eventAdapter);
+
         ((EventAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
@@ -108,7 +116,9 @@ public class EventListActivity extends ListActivity {
                     .findViewById(R.id.textView_fg_it_ev_TITLE);
             TitleTextView.setText(event.getTitle());
             TitleTextView.setBackgroundColor(event.getGroupEvent().getColor());
-
+            //зачеркивание если не активно
+            if (!event.isActive())
+                TitleTextView.setPaintFlags(TitleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
             TextView GroupTextView = (TextView) convertView
                     .findViewById(R.id.textView_fg_it_ev_GROUP);
