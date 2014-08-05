@@ -28,5 +28,8 @@
     <string name="Color_Orange">Orange</string>
     <string name="Color_Red">Red</string>
     <string name="Color_Yellow">Yellow</string>
+    <string name="Devete_event">Удалить событие</string>
+    <string name="Delete_group">Удалить группу</string>
+    <string name="edit_group">Редактировать группу</string>
 
 </resources>

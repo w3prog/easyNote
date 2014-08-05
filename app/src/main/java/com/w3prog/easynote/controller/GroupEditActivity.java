@@ -43,18 +43,16 @@ public class GroupEditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_group);
 
-        Log.d(TAG,"onCreate");
-        Intent intent = getIntent();
-        int i = intent.getIntExtra(EXTRA_ID,0);
-        groupEvent = EventCollection.get(this).getGroupEvent(i);
-        Log.d(TAG,"onCreate");
 
-        Log.d(TAG,groupEvent.getTitle() + "11234");
+        Intent intent = getIntent();
+        int i = intent.getIntExtra(EXTRA_ID,70);
+        groupEvent = EventCollection.get(this).getGroupEvent(i);
+        Log.d(TAG,"ID группы "+i);
 
         titleEditText = (EditText)findViewById(R.id.editText_gr_name);
-        Log.d(TAG,"onCreate");
+
         titleEditText.setText(groupEvent.getTitle().toString());
-        Log.d(TAG,"onCreate");
+
 
         titleEditText.addTextChangedListener(new TextWatcher() {
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,7 @@ public class MainListGroupActivity extends ListActivity {
 
         GroupAdapter groupAdapter = new GroupAdapter(this);
         setListAdapter(groupAdapter);
-
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -49,9 +50,11 @@ public class MainListGroupActivity extends ListActivity {
 
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
+        //обновиться
         ((GroupAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
@@ -76,6 +79,38 @@ public class MainListGroupActivity extends ListActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    //Создание контекстного меню
+    public void onCreateContextMenu(ContextMenu menu,
+                                    View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.group_event_context,menu);
+    }
+
+    @Override
+    //Реакция на действия в контекстном меню
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo  menuInfo=
+                (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int position = menuInfo.position;
+        GroupEvent groupEvent = ((GroupAdapter)getListAdapter())
+                .getItem(position);
+
+        switch (item.getItemId()){
+            //Удаление элементы
+            case R.id.delete_groupevent:
+                EventCollection.get(this).deleteGroupEvent(groupEvent);
+                ((GroupAdapter)getListAdapter()).notifyDataSetChanged();
+                return true;
+            //Редактирование элементы
+            case R.id.edit_groupevent:
+                Intent intent = new Intent(this, GroupEditActivity.class);
+                int ID_event = groupEvent.getId();
+                intent.putExtra(GroupEditActivity.EXTRA_ID,ID_event);
+                startActivity(intent);
+        }
+        return super.onContextItemSelected(item);
     }
 
     private class GroupAdapter extends ArrayAdapter<GroupEvent> {

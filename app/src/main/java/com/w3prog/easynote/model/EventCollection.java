@@ -78,6 +78,8 @@ public class EventCollection {
     }
 
     public void deleteGroupEvent(GroupEvent e){
+        for (Event item:Events)
+            if (item.getGroupEvent().equals(e)) deleteEvent(item);
         GroupEvents.remove(e);
     }
 

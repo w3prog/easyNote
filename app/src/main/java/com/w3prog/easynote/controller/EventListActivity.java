@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ public class EventListActivity extends ListActivity {
         EventAdapter eventAdapter = new EventAdapter(this);
         setListAdapter(eventAdapter);
 
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -95,6 +98,32 @@ public class EventListActivity extends ListActivity {
         ((EventAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
+
+    @Override
+    //Создание контекстного меню
+    public void onCreateContextMenu(ContextMenu menu,
+                                    View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.event_list_context,menu);
+    }
+
+    @Override
+    //Реакция на действия в контекстном меню
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo  menuInfo=
+                (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int position = menuInfo.position;
+        Event event = ((EventAdapter)getListAdapter())
+                .getItem(position);
+
+        switch (item.getItemId()){
+            //Удаление элементы
+            case R.id.delete_groupevent:
+                EventCollection.get(this).deleteEvent(event);
+                onResume();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 
 
     private class EventAdapter extends ArrayAdapter<Event> {
