@@ -34,7 +34,7 @@ public class EventCollection {
         eventDateBase= new EventDateBase(context);
         //Скоро уберу
         //geneCollection();
-        eventDateBase.deleteAllData();
+        //eventDateBase.deleteAllData();
         loadDataBase();
     }
 

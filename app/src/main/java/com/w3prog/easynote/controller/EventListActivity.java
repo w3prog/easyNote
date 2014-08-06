@@ -43,6 +43,7 @@ public class EventListActivity extends ListActivity {
         EventAdapter eventAdapter = new EventAdapter(this);
         setListAdapter(eventAdapter);
 
+        setTitle(EventCollection.get(this).getGroupEvent(ID_group).getTitle());
         registerForContextMenu(getListView());
     }
 
@@ -123,9 +124,13 @@ public class EventListActivity extends ListActivity {
 
         switch (item.getItemId()){
             //Удаление элементы
-            case R.id.delete_groupevent:
+            case R.id.delete_event_contex:
                 EventCollection.get(this).deleteEvent(event);
-                onResume();
+                collectionEvent = EventCollection.get(this)
+                        .getSelectedEvents(ID_group);
+                EventAdapter eventAdapter = new EventAdapter(this);
+                setListAdapter(eventAdapter);
+                ((EventAdapter)getListAdapter()).notifyDataSetChanged();
                 return true;
         }
         return super.onContextItemSelected(item);
