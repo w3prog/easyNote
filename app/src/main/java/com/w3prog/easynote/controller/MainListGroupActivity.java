@@ -113,6 +113,12 @@ public class MainListGroupActivity extends ListActivity {
         return super.onContextItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventCollection.get(getApplication()).updateBateBase();
+    }
+
     private class GroupAdapter extends ArrayAdapter<GroupEvent> {
 
         private GroupAdapter(Context context) {

@@ -107,6 +107,12 @@ public class EventListActivity extends ListActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        EventCollection.get(getApplication()).updateBateBase();
+    }
+
+    @Override
     //Реакция на действия в контекстном меню
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo  menuInfo=

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.w3prog.easynote" >
 
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -26,6 +27,16 @@
 
         <activity android:name=".controller.EditEventActivity" />
 
-    </application>
+        <service android:name=".model.EventServiceNotification"/>
+        
+        <service android:name=".model.ManagerEventsService"/>
+        
+        <receiver android:name=".model.eventBroadReseivers">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
+    </application>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 </manifest>

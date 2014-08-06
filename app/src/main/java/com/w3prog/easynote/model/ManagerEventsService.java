@@ -75,6 +75,9 @@ public class ManagerEventsService extends Service {
             Intent eventIntent = new Intent(this,EventServiceNotification.class);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+
+            pendingsIntents.put(item.getId(),pendingIntent);
+
             alarmManager.set(AlarmManager.RTC,coldate.get(i).getDate(),pendingIntent);
             i++;
         }
@@ -87,6 +90,7 @@ public class ManagerEventsService extends Service {
 
         Intent eventIntent = new Intent(this,EventServiceNotification.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,eventIntent,0);
+        pendingsIntents.put(event.getId(),pendingIntent);
         alarmManager.set(AlarmManager.RTC,
                 event.showTimeRemem(event.getDate(), event.getRemem()).getDate()
                 ,pendingIntent);
@@ -96,18 +100,20 @@ public class ManagerEventsService extends Service {
     private void stantUpd(Intent intent) {
         int id = intent.getIntExtra(ID_EVENT,1);
         Event event = EventCollection.get(getApplication()).getEvent(id);
-        //alarmManager.cancel();
+        PendingIntent oldPending = pendingsIntents.get(event.getId());
+        alarmManager.cancel(oldPending);
+        stantAdd(intent);
 
     }
 
     private void stantDel(Intent intent) {
         int id = intent.getIntExtra(ID_EVENT,1);
-
-
-
-
+        Event event = EventCollection.get(getApplication()).getEvent(id);
+        PendingIntent oldPending = pendingsIntents.get(event.getId());
+        alarmManager.cancel(oldPending);
     }
 
+    //Проверяет находится ли дата вывода сообщения в том же числе что и
     private boolean testDate(Date date) {
         Date nowDate = new Date();
         Calendar calendar = Calendar.getInstance();
